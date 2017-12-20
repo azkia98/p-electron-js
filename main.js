@@ -43,7 +43,7 @@ app.on('ready', () => {
 
     
     win.loadURL(`file://${__dirname}/index.html`);
-    splashWin.loadURL(`file://${__dirname}/hello.html`);
+    splashWin.loadURL(`file://${__dirname}/loading.html`);
     mainWindowState.manage(win);
 });
 
