@@ -1,6 +1,6 @@
 import { BrowserWindow, app } from 'electron';
 import windowStateKeeper from 'electron-window-state';
-
+require('electron-reload')(__dirname);
 
 app.on('ready', () => {
 
@@ -36,7 +36,6 @@ app.on('ready', () => {
 
     splashWin.on('closed',()=>splashWin=null);
     win.on('ready-to-show',()=>{
-        console.log('2')
         win.show();
         splashWin.destroy();
     });

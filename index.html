@@ -1,11 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="public/css/w3.css">
     <meta charset="UTF-8">
     <title>first App</title>
 </head>
 <body>
-<h1>Hello world</h1>
-<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta sequi maiores provident expedita error delectus sint perferendis vero, ea iste sapiente, debitis veritatis non totam inventore cupiditate sit veniam accusamus.</p>
+<div class="w3-main">
+    <div class="w3-margin">
+        <textarea id="editor" class="w3-input w3-border" rows="5"></textarea>
+        <button id="saveBtn" class="w3-button w3-green w3-margin-top">save</button>
+        <button id="openBtn" class="w3-button w3-red w3-margin-top">open</button>
+    </div>
+</div>
+<script>
+    const os=require('os');
+    const path = require('path');
+    const fs=require('fs');
+    const  {dialog}=require('electron').remote;
+    console.log();
+    let openBtn=document.getElementById('openBtn');
+    openBtn.addEventListener('click',()=>{
+        dialog.showOpenDialog({
+            filters:[{name:'text',extensions:['.txt','.png','*']}],
+            defaultPath:path.join(os.homedir())
+        },(fileNames)=>{
+            if(fileNames === undefined) return ;
+            fs.readFile(fileNames[0], (err, data) => {
+                if (err) throw err;
+                document.getElementById('editor').value=data.toString();
+            });
+        } )
+    });
+
+    let saveBtn=document.getElementById('saveBtn');
+    saveBtn.addEventListener('click',()=>{
+        dialog.showSaveDialog({
+            filters:[{name:'text',extensions:['.txt','.png','*']}],
+        },fileName=>{
+            let myDataToSave=document.getElementById('editor').value;
+            console.log(myDataToSave);
+            fs.writeFile(fileName.toString(), myDataToSave, (err) => {
+                if (err) throw err;
+            });
+        });
+    });
+</script>
 </body>
 </html>
