@@ -25,6 +25,17 @@ app.on('ready', () => {
     });
 
 
+    let mainContent=win.webContents;
+
+    mainContent.on('new-window',(event,url)=>{
+        event.preventDefault();
+        let w=new BrowserWindow({width:800,height:600,show:false});
+        w.once('ready-to-show',()=>w.show());
+        w.loadURL(url);
+        event.newGuest=w;
+
+    })
+
 
     
 
